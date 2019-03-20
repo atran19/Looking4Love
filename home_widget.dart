@@ -1,111 +1,121 @@
 import 'package:flutter/material.dart';
-import 'storeusers.dart';
+import 'package:location/location.dart';
 
-class Home extends StatefulWidget {
+
+void main() => runApp(App());
+
+class App extends StatelessWidget {
   @override
-  State<StatefulWidget> createState() {
-    return _HomeState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Title',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: ListenPage(),
+    );
   }
 }
 
-class _HomeState extends State<Home> {
-//  List<User> user = getUser();
-  int _selectedIndex = 1;
-  final _widgetOptions = [
-    Text('Index 0: Home'),
-    Text('Index 1: Message'),
-    Text('Index 2: Profile'),
-  ];
+class ListenPage extends StatefulWidget {
+  @override
+  _ListenPageState createState() => _ListenPageState();
+}
+
+
+int _selectedIndex = 0;
+final _widgetOptions = [
+  Text('Index 0: Home'),
+  Text('Index 1: Message'),
+  Text('Index 2: Profile'),
+];
+
+
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text('Looking 4 Love'),
+    ),
+    body: Column( children: <Widget>[
+      //Row1
+      Row(
+          children: [
+            Container(
+              height: 200,
+              width: 360,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Image.network('https://picsum.photos/360/200'),
+              ),
+            ),
+          ]
+      ),
+      //Row2
+      Row(
+          children: [
+            Container(
+              height: 200,
+              width: 360,
+              child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Image.network('https://lorempixel.com/360/200'),
+              ),
+            ),
+          ]
+      ),
+      //     Center(
+      //     child:  _widgetOptions.elementAt(_selectedIndex),),
+    ]
+
+    ),
+    bottomNavigationBar: BottomNavigationBar(
+      items: <BottomNavigationBarItem>[
+        BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
+        BottomNavigationBarItem(icon: Icon(Icons.mail), title: Text('Message')),
+        BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('Profile')),
+      ],
+      currentIndex: _selectedIndex,
+      fixedColor: Colors.deepPurple,
+    ),
+
+
+  );
+}
+
+
+class _ListenPageState extends State<ListenPage> {
+
+  Location location = Location();
+
+  Map<String, double> currentLocation;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    location.onLocationChanged().listen((value) {
+      setState(() {
+        currentLocation = value;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Looking 4 Love'),
-      ),
-      body:
-
-      Container(
-        height:250,
-        width: 500,
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Image.network ('https://picsum.photos/200/300/?random'),
-
-        ),
-
-      ),
-   
- /*Probably important to put back in.
-      Center(
-
-        child: _widgetOptions.elementAt(_selectedIndex),
-
-      ),
-
-  */
-
-
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-          BottomNavigationBarItem(icon: Icon(Icons.mail), title: Text('Message')),
-          BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('Profile')),
+      appBar: AppBar(),
+      body: Column(
+        children: <Widget>[
+          currentLocation == null
+              ? CircularProgressIndicator()
+              : Text("Location:" + currentLocation["latitude"].toString() + " " + currentLocation["longitude"].toString()),
         ],
-        currentIndex: _selectedIndex,
-        fixedColor: Colors.deepPurple,
-        onTap: _onItemTapped,
-      ),
-    );
-
-
-
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-}
-
-
-
-
-
-/*
-body: Container(
-height:250,
-width: 500,
-child: Card(
-shape: RoundedRectangleBorder(
-borderRadius: BorderRadius.circular(10),
-),
-child: Text('Image Here'),
-
-),
-
-),
-*/
-
-/*
-//Widget that gets passed url of profile pic and returns image rapped
-class RecipeImage extends StatelessWidget {
-  final String imageURL;
-
-  ProfileImage(this.imageURL);
-
-  @override
-  Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 16.0 / 9.0,
-      child: Image.network(
-        imageURL,
-        fit: BoxFit.cover,
       ),
     );
   }
 }
-*/
