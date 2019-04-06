@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
+
 void main() => runApp(App());
 
 class App extends StatelessWidget {
@@ -63,7 +64,25 @@ class _HomeState extends State<Home> {
             ) ,
           )
       ),
-      body: Column( children: <Widget>[
+    body: PageView(
+      children: <Widget>[
+    Container(
+    color: Colors.pink, alignment: Alignment.topCenter,
+
+        child: new Stack(children: <Widget>[
+      Image.network('https://lorempixel.com/360/200'),
+      ])
+
+    ),
+    Container(
+    color: Colors.cyan,
+    ),
+    Container(
+    color: Colors.deepPurple,
+    ),
+    ],
+    ),
+    /*  body: Column( children: <Widget>[
         //Row1
         Row(
             children: [
@@ -104,7 +123,9 @@ class _HomeState extends State<Home> {
         //     child:  _widgetOptions.elementAt(_selectedIndex),),
       ]
 
-      ),
+      ), */
+
+
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
