@@ -4,6 +4,25 @@ import 'package:location/location.dart';
 
 void main() => runApp(App());
 
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second Route"),
+      ),
+      body: Center(
+        child: RaisedButton(
+          onPressed: () {
+            // Navigate back to first route when tapped.
+          },
+          child: Text('Go back!'),
+        ),
+      ),
+    );
+  }
+}
+
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -69,29 +88,94 @@ class _HomeState extends State<Home> {
           RichText(
             text: TextSpan(
               text: 'Looking 4 Love',
-              style: TextStyle(fontStyle : FontStyle.italic, color: Colors.lightGreen.withOpacity(0.1)),
-            ) ,
+              style: TextStyle(fontStyle: FontStyle.italic,
+                  color: Colors.lightGreen.withOpacity(0.1)),
+            ),
           )
       ),
-    body: PageView(
-      children: <Widget>[
-    Container(
-    color: Colors.pink, alignment: Alignment.topCenter,
+      body: PageView(
+        children: <Widget>[
 
-        child: new Stack(children: <Widget>[
-      Image.network('https://lorempixel.com/360/200'),
-      ])
+          Container(
+              color: Colors.grey, alignment: Alignment.topCenter,
 
-    ),
-    Container(
-    color: Colors.cyan,
-    ),
-    Container(
-    color: Colors.deepPurple,
-    ),
-    ],
-    ),
-    /*  body: Column( children: <Widget>[
+              child: Container(
+
+                child: new Stack(children: <Widget>[
+                  new ClipRRect(
+                    borderRadius: new BorderRadius.circular(8.0),
+                child: Image.network('https://lorempixel.com/360/200'),
+                  ),
+
+                  new Container(
+                    alignment: Alignment.bottomCenter,
+                      child: ButtonTheme(
+                      minWidth: 80.0,
+                      height: 80.0,
+
+                    child: new Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+
+                  new RaisedButton(
+
+                    child: const Text('RED'),
+                    color: Colors.red,
+                    padding: EdgeInsets. symmetric(vertical: 8.0),
+                    shape:new CircleBorder(),
+                    elevation: 2.0,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SecondRoute()),
+                      );
+                    }
+                  ),
+                  new RaisedButton(
+                    child: const Text('YELLOW'),
+                    color: Colors.yellow,
+                    splashColor: Colors.blueGrey,
+                    shape:new CircleBorder(),
+                    elevation: 2.0,
+                    onPressed: () {
+                      // Perform some action
+                    },
+
+                  ),
+
+                  new RaisedButton(
+                    child: const Text('GREEN'),
+                    color: Colors.green,
+                    splashColor: Colors.blueGrey,
+                    shape:new CircleBorder(),
+                    elevation: 2.0,
+                    onPressed: () {
+                      // Perform some action
+                    },
+
+                  ),
+                  ]
+                                      ),
+                    ),
+                  ),
+
+              ]
+              ),
+                alignment: Alignment.topCenter,
+                padding: EdgeInsets.all(20.0),
+
+      ),
+          ),
+
+          Container(
+            color: Colors.cyan,
+          ),
+          Container(
+            color: Colors.deepPurple,
+          ),
+        ],
+      ),
+      /*  body: Column( children: <Widget>[
         //Row1
         Row(
             children: [
@@ -138,8 +222,13 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-          BottomNavigationBarItem(icon: Icon(Icons.mail), title: Text('Message')),
-          BottomNavigationBarItem(icon: Icon(Icons.person), title: Text('Profile')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.mail), title: Text('Message')),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person), title: Text('Profile'),
+            
+          )
+          ,
         ],
         currentIndex: _selectedIndex,
         fixedColor: Colors.deepPurple,
@@ -155,43 +244,4 @@ class _HomeState extends State<Home> {
       _selectedIndex = index;
     });
   }
-  List<Widget> _getMatchCard() {
-    List<MatchCard> cards = new List();
-    cards.add(MatchCard(255, 0, 0, 10));
-    cards.add(MatchCard(0, 255, 0, 20));
-    cards.add(MatchCard(0, 0, 255, 30));
-    List<Widget> cardList = new List();
-    for (int x = 0; x < 3; x++) {
-      cardList.add(Positioned(
-        top: cards[x].margin,
-        child: Draggable(
-          onDragEnd: (drag){
-            _removeCard(x);
-          },
-          childWhenDragging: Container(),
-          feedback: Card(
-            elevation: 12,
-            color: Color.fromARGB(255, cards[x].redColor, cards[x].greenColor, cards[x].blueColor),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: Container(
-              width: 240,
-              height: 300,
-            ),
-          ),
-          child: Card(
-            elevation: 12,
-            color: Color.fromARGB(255, cards[x].redColor, cards[x].greenColor, cards[x].blueColor),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-            child: Container(
-              width: 240,
-              height: 300,
-            ),
-          ),
-        ),
-      )
-      );
-    }
-    return cardList;
-  }
 }
-
