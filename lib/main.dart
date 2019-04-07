@@ -97,15 +97,36 @@ class _HomeState extends State<Home> {
         children: <Widget>[
 
           Container(
-              color: Colors.grey, alignment: Alignment.topCenter,
+              color: Colors.grey,
 
               child: Container(
+
 
                 child: new Stack(children: <Widget>[
                   new ClipRRect(
                     borderRadius: new BorderRadius.circular(8.0),
                 child: Image.network('https://lorempixel.com/360/200'),
                   ),
+
+                  new Container(
+                    alignment: FractionalOffset(0.0, 0.4),
+                    child: Text(
+                    'Name, Age ',
+
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,
+                      color: Colors.white),
+                  ),),
+
+                  new Container(
+                    alignment: FractionalOffset(0.01, 0.44),
+                    child: Text(
+                      'Interests',
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),),
 
                   new Container(
                     alignment: Alignment.bottomCenter,
@@ -221,17 +242,13 @@ class _HomeState extends State<Home> {
 
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Home')),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.mail), title: Text('Message')),
           BottomNavigationBarItem(
               icon: Icon(Icons.person), title: Text('Profile'),
-            
+
           )
           ,
         ],
         currentIndex: _selectedIndex,
-        fixedColor: Colors.deepPurple,
         onTap: _onItemTapped,
       ),
 
@@ -240,8 +257,9 @@ class _HomeState extends State<Home> {
   }
 
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => SecondRoute()),
+    );
   }
 }
