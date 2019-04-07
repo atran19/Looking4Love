@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 
+
 void main() => runApp(App());
 
 class App extends StatelessWidget {
@@ -38,6 +39,15 @@ class _HomeState extends State<Home> {
   Location location = Location();
 
   Map<String, double> currentLocation;
+
+  List<Widget>cardList;
+
+  void _removeCard(index) {
+    setState(() {
+      cardList.removeAt(index);
+    }
+    );
+  }
 
   @override
   void initState() {
@@ -124,6 +134,44 @@ class _HomeState extends State<Home> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+  List<Widget> _getMatchCard() {
+    List<MatchCard> cards = new List();
+    cards.add(MatchCard(255, 0, 0, 10));
+    cards.add(MatchCard(0, 255, 0, 20));
+    cards.add(MatchCard(0, 0, 255, 30));
+    List<Widget> cardList = new List();
+    for (int x = 0; x < 3; x++) {
+      cardList.add(Positioned(
+        top: cards[x].margin,
+        child: Draggable(
+          onDragEnd: (drag){
+            _removeCard(x);
+          },
+          childWhenDragging: Container(),
+          feedback: Card(
+            elevation: 12,
+            color: Color.fromARGB(255, cards[x].redColor, cards[x].greenColor, cards[x].blueColor),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Container(
+              width: 240,
+              height: 300,
+            ),
+          ),
+          child: Card(
+            elevation: 12,
+            color: Color.fromARGB(255, cards[x].redColor, cards[x].greenColor, cards[x].blueColor),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+            child: Container(
+              width: 240,
+              height: 300,
+            ),
+          ),
+        ),
+      )
+      );
+    }
+    return cardList;
   }
 }
 
