@@ -1,6 +1,8 @@
 
 import "package:flutter/material.dart";
 import "package:location/location.dart";
+import 'package:carousel_slider/carousel_slider.dart';
+
 
 
 
@@ -35,9 +37,9 @@ class App extends StatelessWidget {
     return MaterialApp(
       title: 'Title',
       theme: ThemeData(
-          brightness: Brightness.light,
+          brightness: Brightness.dark,
           primarySwatch: Colors.grey,
-          accentColor: Colors.pink
+          accentColor: Colors.grey
       ),
       home: Home(),
     );
@@ -93,111 +95,165 @@ class _HomeState extends State<Home> {
           title:
           RichText(
             text: TextSpan(
-              text: 'Looking 4 Love',
-              style: TextStyle(fontStyle: FontStyle.italic,
-                  color: Colors.lightGreen.withOpacity(0.1)),
+              text: 'INTERSECTION',
+              style: TextStyle(fontStyle: FontStyle.italic,fontWeight: FontWeight.bold,
+                  color: Colors.lightGreen.withOpacity(0.9)),
+
+
             ),
           )
       ),
-      body: PageView(
-        children: <Widget>[
 
-          Container(
-              color: Colors.grey.withOpacity(.7),
+      body: Center(
+        child: CarouselSlider(
+          height: 500.0,
+          items: [1,2,3,4,5].map((i) {
+            return Builder(
+              builder: (BuildContext context) {
+                return Container(child: PageView(
+                  children: <Widget>[
 
-              child: Container(
+                    Container(
+                      color: Colors.grey.withOpacity(.5),
+                      margin: const EdgeInsets.all(2.0),
 
 
-                child: new Stack(children: <Widget>[
-                  new ClipRRect(
-                    borderRadius: new BorderRadius.circular(8.0),
-                child: Image.network('https://lorempixel.com/360/200'),
-                  ),
 
-                  new Container(
-                    alignment: FractionalOffset(0.0, 0.4),
-                    child: Text(
-                    'Name, Age ',
+                      child: Container(
 
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,
-                      color: Colors.white),
-                  ),),
 
-                  new Container(
-                    alignment: FractionalOffset(0.01, 0.44),
-                    child: Text(
-                      'Interests',
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),),
+
+                        child: new Stack(children: <Widget>[
+                          new ClipRRect(
+                            borderRadius: new BorderRadius.circular(8.0),
+                            child: Image.network('https://lorempixel.com/250/170'),
+                          ),
 
                   new Container(
-                    alignment: Alignment.bottomCenter,
-                      child: ButtonTheme(
-                      minWidth: 80.0,
-                      height: 80.0,
-
-                    child: new Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-
-                  new RaisedButton(
-
-                    child: const Text('RED'),
-                    color: Colors.red,
-                    padding: EdgeInsets. symmetric(vertical: 8.0),
-                    shape:new CircleBorder(),
-                    elevation: 2.0,
-                    onPressed: () {
-                      _RemovePage;
-                    }
-                  ),
-                  new RaisedButton(
-                    child: const Text('YELLOW'),
-                    color: Colors.yellow,
-                    splashColor: Colors.blueGrey,
-                    shape:new CircleBorder(),
-                    elevation: 2.0,
-                    onPressed: () {
-                      // Perform some action
-                    },
-
+                    margin: const EdgeInsets.all(2.0),
+                      height: 325,
+                      width: 300,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(.25),
+                        border: Border.all(color: Colors.black, width: 6),),
                   ),
 
-                  new RaisedButton(
-                    child: const Text('GREEN'),
-                    color: Colors.green,
-                    splashColor: Colors.blueGrey,
-                    shape:new CircleBorder(),
-                    elevation: 2.0,
-                    onPressed: () {
-                      // Perform some action
-                    },
 
-                  ),
-                  ]
-                                      ),
+                      new Container(
+
+                            alignment: FractionalOffset(0.50, 0.4),
+                            child: Text(
+
+                              'NAME, AGE  $i ',
+
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,
+                                  color: Colors.white),
+                            ),),
+
+                          new Container(
+                            alignment: FractionalOffset(0.49, 0.46),
+                            child: Text(
+                              'Interests #1 $i',
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),),
+
+                          new Container(
+                            alignment: FractionalOffset(0.49, 0.5),
+                            child: Text(
+                              'Interests #2 $i',
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),),
+
+                          new Container(
+                            alignment: FractionalOffset(0.49, 0.54),
+                            child: Text(
+                              'Interests #3 $i',
+                              textAlign: TextAlign.center,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),),
+
+
+
+                          new Container(
+                            decoration: new BoxDecoration(
+                                border: new Border.all(color: Colors.grey, width:4)
+                            ),
+                              alignment: FractionalOffset(0.0, 0.9),
+                            child: ButtonTheme(
+                              minWidth: 70.0,
+                              height: 70.0,
+
+
+
+                              child: new Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: <Widget>[
+
+                                    new RaisedButton(
+                                      
+                                        color: Colors.red.withOpacity(0.75),
+                                        padding: EdgeInsets. symmetric(vertical: 8.0),
+                                        shape:new CircleBorder(),
+                                        elevation: 2.0,
+                                        onPressed: () {
+                                                                                    // Perform some action
+                                        },
+                                    ),
+                                    new RaisedButton(
+                                      color: Colors.yellow.withOpacity(0.75),
+                                      splashColor: Colors.blueGrey,
+                                      shape:new CircleBorder(),
+                                      elevation: 2.0,
+                                      onPressed: () {
+                                        // Perform some action
+                                      },
+
+                                    ),
+
+                                    new RaisedButton(
+                                      color: Colors.green.withOpacity(0.75),
+                                      splashColor: Colors.blueGrey,
+                                      shape:new CircleBorder(),
+                                      elevation: 2.0,
+                                      onPressed: () {
+                                        // Perform some action
+                                      },
+
+                                    ),
+                                  ]
+                              ),
+                            ),
+                          ),
+
+                        ]
+                        ),
+                        alignment: Alignment.topCenter,
+                        padding: EdgeInsets.all(20.0),
+
+
+                      ),
+
                     ),
-                  ),
 
-              ]
-              ),
-                alignment: Alignment.topCenter,
-                padding: EdgeInsets.all(20.0),
 
-      ),
-          ),
+                  ],
 
-          Container(
-            color: Colors.cyan,
-          ),
-          Container(
-            color: Colors.deepPurple,
-          ),
-        ],
+                ),
+
+
+
+                );
+              },
+            );
+          }).toList(),
+        ),
       ),
       /*  body: Column( children: <Widget>[
         //Row1
@@ -257,18 +313,18 @@ class _HomeState extends State<Home> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-      ),
+),
 
 
-    );
-  }
+);
+}
 
-  void _onItemTapped(int index) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => SecondRoute()),
-    );
-  }
+void _onItemTapped(int index) {
+  Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => SecondRoute()),
+  );
+}
 }
 
 void _RemovePage () {
