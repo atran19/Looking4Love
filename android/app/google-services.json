@@ -1,0 +1,35 @@
+{
+  "project_info": {
+    "project_number": "484595212746",
+    "firebase_url": "https://looking4love-7ee9f.firebaseio.com",
+    "project_id": "looking4love-7ee9f",
+    "storage_bucket": "looking4love-7ee9f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:484595212746:android:2dd08c3fe2517df8",
+        "android_client_info": {
+          "package_name": "com.example.dating_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3vi20c7bRol56IGy4mj-36syhWd0-ZB4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "484595212746-lsi2m7vvs77hr0mv2b2boqs3u23tl0cm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

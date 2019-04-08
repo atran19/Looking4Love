@@ -1,6 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:location/location.dart';
-import 'package:carousel/carousel.dart';
+import "package:flutter/material.dart";
+import "package:location/location.dart";
+
 
 
 void main() => runApp(App());
@@ -249,6 +249,10 @@ class _HomeState extends State<Home> {
 
           )
           ,
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message), title: Text('Profile'),
+
+          )
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
