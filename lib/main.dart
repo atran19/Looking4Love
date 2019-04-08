@@ -4,12 +4,16 @@ import 'package:location/location.dart';
 
 void main() => runApp(App());
 
+
+
+
+
 class SecondRoute extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Second Route"),
+        title: Text("Profile"),
       ),
       body: Center(
         child: RaisedButton(
@@ -30,7 +34,7 @@ class App extends StatelessWidget {
       title: 'Title',
       theme: ThemeData(
           brightness: Brightness.light,
-          primarySwatch: Colors.red,
+          primarySwatch: Colors.grey,
           accentColor: Colors.pink
       ),
       home: Home(),
@@ -97,7 +101,7 @@ class _HomeState extends State<Home> {
         children: <Widget>[
 
           Container(
-              color: Colors.grey,
+              color: Colors.grey.withOpacity(.7),
 
               child: Container(
 
@@ -146,10 +150,7 @@ class _HomeState extends State<Home> {
                     shape:new CircleBorder(),
                     elevation: 2.0,
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SecondRoute()),
-                      );
+                      _RemovePage;
                     }
                   ),
                   new RaisedButton(
@@ -262,4 +263,10 @@ class _HomeState extends State<Home> {
       MaterialPageRoute(builder: (context) => SecondRoute()),
     );
   }
+}
+
+void _RemovePage () {
+
+
+
 }
