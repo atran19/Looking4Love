@@ -1,35 +1,28 @@
-
 import "package:flutter/material.dart";
 import "package:location/location.dart";
 import 'package:carousel_slider/carousel_slider.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 
 
 
-void main() => runApp(App());
+void main() {
+  runApp(App());
+
+}
 
 
-
-
-
-class SecondRoute extends StatelessWidget {
+class Profile extends StatelessWidget {
   @override
+
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Profile"),
-      ),
-      body: Center(
-        child: RaisedButton(
-          onPressed: () {
-            // Navigate back to first route when tapped.
-          },
-          child: Text('Go back!'),
-        ),
-      ),
+    return new MaterialApp(
+      home: new UserOptions(),
     );
   }
 }
+
 
 class App extends StatelessWidget {
   @override
@@ -120,13 +113,14 @@ class _HomeState extends State<Home> {
 
 
                       child: Container(
-
-
+                        alignment: FractionalOffset(0.50, 0.4),
 
                         child: new Stack(children: <Widget>[
+
                           new ClipRRect(
                             borderRadius: new BorderRadius.circular(8.0),
                             child: Image.network('https://lorempixel.com/250/170'),
+
                           ),
 
                   new Container(
@@ -234,7 +228,6 @@ class _HomeState extends State<Home> {
 
                         ]
                         ),
-                        alignment: Alignment.topCenter,
                         padding: EdgeInsets.all(20.0),
 
 
@@ -322,7 +315,7 @@ class _HomeState extends State<Home> {
 void _onItemTapped(int index) {
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => SecondRoute()),
+    MaterialPageRoute(builder: (context) => Profile()),
   );
 }
 }
@@ -331,4 +324,124 @@ void _RemovePage () {
 
 
 
+}
+
+class UserOptions extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new UserOptionsState();
+  }
+}
+
+class UserOptionsState extends State<UserOptions> {
+//save the result of gallery file
+  File galleryFile;
+
+//save the result of camera file
+  File cameraFile;
+
+  @override
+  Widget build(BuildContext context) {
+
+    //display image selected from gallery
+    imageSelectorGallery() async {
+      galleryFile = await ImagePicker.pickImage(
+        source: ImageSource.gallery,
+        // maxHeight: 50.0,
+        // maxWidth: 50.0,
+      );
+      print("You selected gallery image : " + galleryFile.path);
+      setState(() {});
+    }
+
+    //display image selected from camera
+    imageSelectorCamera() async {
+      cameraFile = await ImagePicker.pickImage(
+        source: ImageSource.camera,
+        //maxHeight: 50.0,
+        //maxWidth: 50.0,
+      );
+      print("You selected camera image : " + cameraFile.path);
+      setState(() {});
+    }
+
+    return new Scaffold(
+
+      appBar: AppBar(
+          title:
+          RichText(
+            text: TextSpan(
+              text: 'INTERSECTION',
+              style: TextStyle(fontStyle: FontStyle.italic,fontWeight: FontWeight.bold,
+                  color: Colors.lightGreen.withOpacity(0.9)),
+            ),
+          )
+      ),
+      body: new Builder(
+
+        builder: (BuildContext context) {
+          return new Container (
+            child: Stack(
+              alignment: FractionalOffset(0.5, 0.4) ,
+
+
+            children: <Widget>[
+
+              displaySelectedFile(galleryFile),
+              displaySelectedFile(cameraFile),
+
+              Container(
+                  alignment: FractionalOffset(0.5, 0.8),
+              child: new RaisedButton(
+
+                child: new Text('Select Image from Gallery'),
+                onPressed: imageSelectorGallery,
+              ),
+              ),
+              Container(
+          alignment: FractionalOffset(0.5, 0.9),
+              child: new RaisedButton(
+                child: new Text('Select Image from Camera'),
+                onPressed: imageSelectorCamera,
+              ),
+              ),
+          Container(
+          alignment: FractionalOffset(0.5, 1),
+          child: new RaisedButton(
+          child: new Text('GO BACK'),
+          onPressed: () {
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => App()),
+            );
+          // Perform some action
+          },
+          ),
+          ),
+
+
+            ],
+              )
+
+          )
+          ;
+        },
+      ),
+    );
+  }
+
+  Widget displaySelectedFile(File file) {
+    return new Container(
+      alignment: FractionalOffset(0.5, 0.9),
+      height: 250.0,
+      width: 400.0,
+
+//child: new Card(child: new Text(''+galleryFile.toString())),
+//child: new Image.file(galleryFile),
+      child: file == null
+          ? new Text('Sorry nothing selected!!')
+          : new Image.file(file),
+    );
+  }
 }
