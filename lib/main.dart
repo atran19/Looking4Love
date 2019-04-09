@@ -4,7 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
-List<String> Names = ['Jesse Domingo', 'Anna Tran', 'Suhail Rajah ', 'Pete Tucker', 'Kent Jones'];
+List<String> Names = ['https://lorempixel.com/250/170', 'https://picsum.photos/250/170', 'https://lorempixel.com/250/169', 'https://lorempixel.com/250/171', 'https://lorempixel.com/250/174'];
 
 void main() {
   runApp(App());
@@ -118,7 +118,7 @@ class _HomeState extends State<Home> {
 
                           new ClipRRect(
                             borderRadius: new BorderRadius.circular(8.0),
-                            child: Image.network('https://lorempixel.com/250/170'),
+                            child: new Image.network(i),
 
                           ),
 
@@ -137,7 +137,7 @@ class _HomeState extends State<Home> {
                             alignment: FractionalOffset(0.50, 0.4),
                             child: Text(
 
-                              '$i, Age ',
+                              'Name, Age ',
 
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
@@ -148,7 +148,7 @@ class _HomeState extends State<Home> {
                           new Container(
                             alignment: FractionalOffset(0.49, 0.46),
                             child: Text(
-                              'Interests #1 $i',
+                              'Interests #1',
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -157,7 +157,7 @@ class _HomeState extends State<Home> {
                           new Container(
                             alignment: FractionalOffset(0.49, 0.5),
                             child: Text(
-                              'Interests #2 $i',
+                              'Interests #2 ',
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontWeight: FontWeight.bold),
@@ -166,7 +166,7 @@ class _HomeState extends State<Home> {
                           new Container(
                             alignment: FractionalOffset(0.49, 0.54),
                             child: Text(
-                              'Interests #3 $i',
+                              'Interests #3 ',
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(fontWeight: FontWeight.bold),
