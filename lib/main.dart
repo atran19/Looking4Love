@@ -4,8 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 
-
-
+List<String> Names = ['Jesse Domingo', 'Anna Tran', 'Suhail Rajah ', 'Pete Tucker', 'Kent Jones'];
 
 void main() {
   runApp(App());
@@ -100,7 +99,7 @@ class _HomeState extends State<Home> {
       body: Center(
         child: CarouselSlider(
           height: 500.0,
-          items: [1,2,3,4,5].map((i) {
+          items: Names.map((i) {
             return Builder(
               builder: (BuildContext context) {
                 return Container(child: PageView(
@@ -138,7 +137,7 @@ class _HomeState extends State<Home> {
                             alignment: FractionalOffset(0.50, 0.4),
                             child: Text(
 
-                              'NAME, AGE  $i ',
+                              '$i, Age ',
 
                               textAlign: TextAlign.center,
                               overflow: TextOverflow.ellipsis,
@@ -197,6 +196,8 @@ class _HomeState extends State<Home> {
                                         shape:new CircleBorder(),
                                         elevation: 2.0,
                                         onPressed: () {
+
+                                          Names.remove(i);
                                                                                     // Perform some action
                                         },
                                     ),
