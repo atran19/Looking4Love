@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:location/location.dart";
 import 'package:carousel_slider/carousel_slider.dart';
 import 'dart:io';
+import 'dart:math' as math;
 import 'package:image_picker/image_picker.dart';
 import 'home_screen.dart';
 
@@ -15,9 +16,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Image picker',
       theme: new ThemeData(
-        primaryColor: const Color(0xFF02BB9F),
-        primaryColorDark: const Color(0xFF167F67),
-        accentColor: const Color(0xFF167F67),
+        brightness: Brightness.dark,
+        primarySwatch: Colors.grey,
+        accentColor: Colors.grey
 
       ),
       home: new HomeScreen(title: 'Intersection'),
@@ -117,7 +118,11 @@ class _HomeState extends State<Home> {
           )
       ),
 
-      body: Center(
+      body:
+
+
+      Center(
+
         child: CarouselSlider(
           height: 500.0,
           items: Names.map((i) {
@@ -142,6 +147,15 @@ class _HomeState extends State<Home> {
                             child: new Image.network(i),
 
                           ),
+
+                          new Row(children: <Widget>[
+                            currentLocation == null
+                                ? CircularProgressIndicator()
+                                : Text("Location:" + currentLocation["latitude"].toString() + " " + currentLocation["longitude"].toString()),
+                          ]
+                          ),
+
+
 
                   new Container(
                     margin: const EdgeInsets.all(2.0),
@@ -270,48 +284,7 @@ class _HomeState extends State<Home> {
           }).toList(),
         ),
       ),
-      /*  body: Column( children: <Widget>[
-        //Row1
-        Row(
-            children: [
-              Container(
-                height: 200,
-                width: 360,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Image.network('https://picsum.photos/360/200'),
-                ),
-              ),
-            ]
-        ),
-        //Row2
-        Row(
-            children: [
-              Container(
-                height: 200,
-                width: 360,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Image.network('https://lorempixel.com/360/200'),
-                ),
-              ),
-            ]
-        ),
-        Row(children: <Widget>[
-          currentLocation == null
-              ? CircularProgressIndicator()
-              : Text("Location:" + currentLocation["latitude"].toString() + " " + currentLocation["longitude"].toString()),
-        ]
-        )
-        //     Center(
-        //     child:  _widgetOptions.elementAt(_selectedIndex),),
-      ]
 
-      ), */
 
 
       bottomNavigationBar: BottomNavigationBar(
@@ -467,3 +440,5 @@ class UserOptionsState extends State<UserOptions> {
     );
   }
 }
+
+

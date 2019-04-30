@@ -1,7 +1,10 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'image_picker_handler.dart';
 import 'image_picker_dialog.dart';
+
+
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -120,7 +123,7 @@ class _HomeScreenState extends State<HomeScreen>
                     );
                   }).toList(),
                   onChanged: (_) {
-                    
+
                   },
                 ),
               ),
@@ -150,13 +153,19 @@ class _HomeScreenState extends State<HomeScreen>
 
 
               new Container(
+
           alignment: Alignment(0.0,-0.9),
 
-                child: new CircleAvatar(
+                child:
+
+                new CircleAvatar(
+                  child: Text("Press to Insert Image"),
                   radius: 80.0,
                   backgroundColor: const Color(0xFF778899),
                 ),
               ),
+
+
               //new Center(
               //  child: new Image.asset("yellowlab.jpg"),
             //  ),
@@ -178,6 +187,8 @@ class _HomeScreenState extends State<HomeScreen>
               new BorderRadius.all(const Radius.circular(80.0)),
 
 
+
+
             ),
           ),
         ),
@@ -193,4 +204,30 @@ class _HomeScreenState extends State<HomeScreen>
       this._image = _image;
     });
   }
+}
+
+Widget roundedButton(
+    String buttonLabel, EdgeInsets margin, Color bgColor, Color textColor) {
+  var loginBtn = new Container(
+    margin: margin,
+    padding: EdgeInsets.all(15.0),
+    alignment: FractionalOffset.center,
+    decoration: new BoxDecoration(
+      color: bgColor,
+      borderRadius: new BorderRadius.all(const Radius.circular(100.0)),
+      boxShadow: <BoxShadow>[
+        BoxShadow(
+          color: const Color(0xFF696969),
+          offset: Offset(1.0, 6.0),
+          blurRadius: 0.001,
+        ),
+      ],
+    ),
+    child: Text(
+      buttonLabel,
+      style: new TextStyle(
+          color: textColor, fontSize: 20.0, fontWeight: FontWeight.bold),
+    ),
+  );
+  return loginBtn;
 }
