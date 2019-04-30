@@ -58,7 +58,7 @@ class _HomeScreenState extends State<HomeScreen>
                 ),
               ),
               new Center(
-                child: new Image.asset("assets/photo_camera.png"),
+                child: new Image.asset("yellowlab.jpg"),
               ),
 
             ],

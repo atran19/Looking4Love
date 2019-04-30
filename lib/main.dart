@@ -3,6 +3,27 @@ import "package:location/location.dart";
 import 'package:carousel_slider/carousel_slider.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'home_screen.dart';
+
+
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Image picker',
+      theme: new ThemeData(
+        primaryColor: const Color(0xFF02BB9F),
+        primaryColorDark: const Color(0xFF167F67),
+        accentColor: const Color(0xFF167F67),
+
+      ),
+      home: new HomeScreen(title: 'Flutter Image picker'),
+    );
+  }
+}
 
 List<String> Names = ['https://lorempixel.com/250/170', 'https://picsum.photos/250/170', 'https://lorempixel.com/250/169', 'https://lorempixel.com/250/171', 'https://lorempixel.com/250/174'];
 
@@ -197,8 +218,8 @@ class _HomeState extends State<Home> {
                                         elevation: 2.0,
                                         onPressed: () {
 
-                                          Names.remove(i);
-                                                                                    // Perform some action
+                                          setState (() =>Names.remove(i));
+                                                                                   // Perform some action
                                         },
                                     ),
                                     new RaisedButton(
@@ -316,7 +337,7 @@ class _HomeState extends State<Home> {
 void _onItemTapped(int index) {
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Profile()),
+    MaterialPageRoute(builder: (context) => MyApp()),
   );
 }
 }
