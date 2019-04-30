@@ -46,20 +46,120 @@ class _HomeScreenState extends State<HomeScreen>
       ),
       body: new GestureDetector(
         onTap: () => imagePicker.showDialog(context),
-        child: new Center(
+        child: new Container(
+          alignment: Alignment(0.0,-0.9),
           child: _image == null
               ? new Stack(
             children: <Widget>[
 
-              new Center(
+          new Container(
+            alignment: FractionalOffset(0.50, 0.4),
+          child: TextField(
+            textAlign: TextAlign.center,
+          decoration: new InputDecoration.collapsed(
+          hintText: 'Input Name Here'
+          ),
+        ),
+      ),
+          new Container(
+            alignment: FractionalOffset(0.50, 0.44),
+            child: TextField(
+              textAlign: TextAlign.center,
+              decoration: new InputDecoration.collapsed(
+                  hintText: 'Input Age Here'
+              ),
+            ),
+          ),
+
+          new Container(
+            alignment: FractionalOffset(0.5, 0.48),
+            child: TextField(
+              textAlign: TextAlign.center,
+              decoration: new InputDecoration.collapsed(
+                  hintText: 'Input Interest #1 Here'
+              ),
+            ),
+          ),
+
+          new Container(
+            alignment: FractionalOffset(0.5, 0.52),
+            child: TextField(
+              textAlign: TextAlign.center,
+              decoration: new InputDecoration.collapsed(
+                  hintText: 'Input Interest #2 Here'
+              ),
+            ),
+          ),
+          new Container(
+            alignment: FractionalOffset(0.9, 0.56), child: TextField(
+            textAlign: TextAlign.center,
+              decoration: new InputDecoration.collapsed(
+                  hintText: 'Input Interest #3 Here'
+              ),
+            ),
+          ),
+
+
+
+              new Container(
+                alignment: FractionalOffset(0.5, 0.6),
+                child: Text(
+                  'Gender:',
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+  ),),
+
+              new Container(
+                alignment: FractionalOffset(0.5, 0.66),
+                child: new DropdownButton<String>(
+                  items: <String>['Male', 'Female',].map((String value) {
+                    return new DropdownMenuItem<String>(
+                      value: value,
+                      child: new Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (_) {
+                    
+                  },
+                ),
+              ),
+
+              new Container(
+                alignment: FractionalOffset(0.5, 0.72),
+                child: Text(
+                  'Looking for:',
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),),
+
+               new Container(
+                   alignment: FractionalOffset(0.5, 0.78),
+                 child: new DropdownButton<String>(
+                 items: <String>['Males', 'Females', 'Both'].map((String value) {
+                   return new DropdownMenuItem<String>(
+                     value: value,
+                     child: new Text(value),
+                   );
+                 }).toList(),
+                 onChanged: (_) {},
+                 ),
+               ),
+
+
+
+              new Container(
+          alignment: Alignment(0.0,-0.9),
+
                 child: new CircleAvatar(
                   radius: 80.0,
                   backgroundColor: const Color(0xFF778899),
                 ),
               ),
-              new Center(
-                child: new Image.asset("yellowlab.jpg"),
-              ),
+              //new Center(
+              //  child: new Image.asset("yellowlab.jpg"),
+            //  ),
 
             ],
           )
@@ -73,13 +173,16 @@ class _HomeScreenState extends State<HomeScreen>
                 fit: BoxFit.cover,
               ),
               border:
-              Border.all(color: Colors.red, width: 5.0),
+              Border.all(color: Colors.lightGreen, width: 5.0),
               borderRadius:
               new BorderRadius.all(const Radius.circular(80.0)),
+
+
             ),
           ),
         ),
       ),
+
 
     );
   }

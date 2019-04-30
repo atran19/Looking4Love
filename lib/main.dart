@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         accentColor: const Color(0xFF167F67),
 
       ),
-      home: new HomeScreen(title: 'Flutter Image picker'),
+      home: new HomeScreen(title: 'Intersection'),
     );
   }
 }
