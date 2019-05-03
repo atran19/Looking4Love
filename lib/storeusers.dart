@@ -1,5 +1,22 @@
+import 'package:http/http.dart';
+import 'dart:convert';
 
+class Users {
+  String name;
+  Users.fromJson(Map json)
+  {
+    this.name =json ['name'];
+  }
+}
 
+Future _click() async {
+  var data = await get ('https://us-central1-looking4love-7ee9f.cloudfunctions.net/addMessage?name=jesse&age=22&interests=javascript');
+  var users = new Users.fromJson(json.decode(data.body));
+
+  setState(() {
+    _data = users.name;
+  });
+}
 
 /*
 class User {
