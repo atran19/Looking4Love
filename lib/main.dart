@@ -2,7 +2,29 @@ import "package:flutter/material.dart";
 import "package:location/location.dart";
 import 'package:carousel_slider/carousel_slider.dart';
 import 'dart:io';
+import 'dart:math' as math;
 import 'package:image_picker/image_picker.dart';
+import 'home_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+
+
+class MyApp extends StatelessWidget {
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter Image picker',
+      theme: new ThemeData(
+        brightness: Brightness.dark,
+        primarySwatch: Colors.grey,
+        accentColor: Colors.grey
+
+      ),
+      home: new HomeScreen(title: 'Intersection'),
+    );
+  }
+}
 
 List<String> Names = ['https://lorempixel.com/250/170', 'https://picsum.photos/250/170', 'https://lorempixel.com/250/169', 'https://lorempixel.com/250/171', 'https://lorempixel.com/250/174'];
 
@@ -96,7 +118,11 @@ class _HomeState extends State<Home> {
           )
       ),
 
-      body: Center(
+      body:
+
+
+      Center(
+
         child: CarouselSlider(
           height: 500.0,
           items: Names.map((i) {
@@ -121,6 +147,15 @@ class _HomeState extends State<Home> {
                             child: new Image.network(i),
 
                           ),
+
+                          new Row(children: <Widget>[
+                            currentLocation == null
+                                ? CircularProgressIndicator()
+                                : Text("Location:" + currentLocation["latitude"].toString() + " " + currentLocation["longitude"].toString()),
+                          ]
+                          ),
+
+
 
                   new Container(
                     margin: const EdgeInsets.all(2.0),
@@ -197,8 +232,8 @@ class _HomeState extends State<Home> {
                                         elevation: 2.0,
                                         onPressed: () {
 
-                                          Names.remove(i);
-                                                                                    // Perform some action
+                                          setState (() =>Names.remove(i));
+                                                                                   // Perform some action
                                         },
                                     ),
                                     new RaisedButton(
@@ -249,48 +284,7 @@ class _HomeState extends State<Home> {
           }).toList(),
         ),
       ),
-      /*  body: Column( children: <Widget>[
-        //Row1
-        Row(
-            children: [
-              Container(
-                height: 200,
-                width: 360,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Image.network('https://picsum.photos/360/200'),
-                ),
-              ),
-            ]
-        ),
-        //Row2
-        Row(
-            children: [
-              Container(
-                height: 200,
-                width: 360,
-                child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Image.network('https://lorempixel.com/360/200'),
-                ),
-              ),
-            ]
-        ),
-        Row(children: <Widget>[
-          currentLocation == null
-              ? CircularProgressIndicator()
-              : Text("Location:" + currentLocation["latitude"].toString() + " " + currentLocation["longitude"].toString()),
-        ]
-        )
-        //     Center(
-        //     child:  _widgetOptions.elementAt(_selectedIndex),),
-      ]
 
-      ), */
 
 
       bottomNavigationBar: BottomNavigationBar(
@@ -316,7 +310,7 @@ class _HomeState extends State<Home> {
 void _onItemTapped(int index) {
   Navigator.push(
     context,
-    MaterialPageRoute(builder: (context) => Profile()),
+    MaterialPageRoute(builder: (context) => MyApp()),
   );
 }
 }
@@ -336,36 +330,48 @@ class UserOptions extends StatefulWidget {
 
 class UserOptionsState extends State<UserOptions> {
 //save the result of gallery file
-  File galleryFile;
+ // File galleryFile;
 
 //save the result of camera file
-  File cameraFile;
+ // File cameraFile;
 
+  File _imageFile;
+  bool _uploaded;
+  //String _downloadedUrl;
+  StorageReference _reference = FirebaseStorage.instance.ref().child('yellowlab.jpg');
+
+  Future getImage (bool isCamera) async {
+    File image;
+    if (isCamera) {
+      image = await ImagePicker.pickImage(source: ImageSource.camera);
+    }
+    else {
+      image = await ImagePicker.pickImage(source: ImageSource.gallery);
+    }
+    setState(() {
+      _imageFile = image;
+    });
+  }
   @override
   Widget build(BuildContext context) {
 
-    //display image selected from gallery
-    imageSelectorGallery() async {
-      galleryFile = await ImagePicker.pickImage(
-        source: ImageSource.gallery,
-        // maxHeight: 50.0,
-        // maxWidth: 50.0,
-      );
-      print("You selected gallery image : " + galleryFile.path);
-      setState(() {});
+
+    Future uploadImage() async{
+
+      StorageUploadTask uploadTask = _reference.putFile(_imageFile);
+      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
+       setState ((){
+           _uploaded = true;
+           });
     }
 
-    //display image selected from camera
-    imageSelectorCamera() async {
-      cameraFile = await ImagePicker.pickImage(
-        source: ImageSource.camera,
-        //maxHeight: 50.0,
-        //maxWidth: 50.0,
-      );
-      print("You selected camera image : " + cameraFile.path);
-      setState(() {});
+ /*   Future downloadImage() async {
+      String downloadAddress = await _reference.getDownloadURL();
+      setState(() {
+        _downloadUrl = downloadAddress;
+      });
     }
-
+*/
     return new Scaffold(
 
       appBar: AppBar(
@@ -388,41 +394,45 @@ class UserOptionsState extends State<UserOptions> {
 
             children: <Widget>[
 
-              displaySelectedFile(galleryFile),
-              displaySelectedFile(cameraFile),
+   //           displaySelectedFile(galleryFile),
+   //           displaySelectedFile(cameraFile),
 
               Container(
                   alignment: FractionalOffset(0.5, 0.8),
               child: new RaisedButton(
 
                 child: new Text('Select Image from Gallery'),
-                onPressed: imageSelectorGallery,
+                onPressed: (){
+                  getImage(false);
+                }
               ),
               ),
               Container(
           alignment: FractionalOffset(0.5, 0.9),
               child: new RaisedButton(
                 child: new Text('Select Image from Camera'),
-                onPressed: imageSelectorCamera,
+                  onPressed: (){
+                    getImage(true);
+                  }
               ),
               ),
           Container(
           alignment: FractionalOffset(0.5, 1),
           child: new RaisedButton(
-          child: new Text('GO BACK'),
+          child: new Text('Submit Photo'),
           onPressed: () {
 
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => App()),
-            );
+            uploadImage();
+
           // Perform some action
           },
-          ),
+
           ),
 
+          ),
+ //             _uploaded == false ? Container () : RaisedButton
 
-            ],
+          ],
               )
 
           )
@@ -446,3 +456,5 @@ class UserOptionsState extends State<UserOptions> {
     );
   }
 }
+
+

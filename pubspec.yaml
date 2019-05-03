@@ -19,8 +19,10 @@ environment:
 dependencies:
   location: ^1.4.1
   flutter_geofire: ^0.0.4
+  firebase_storage: ^2.1.1+1
   image_picker: ^0.4.5
   image_cropper: ^0.0.4
+
 
   flutter:
     sdk: flutter
@@ -43,7 +45,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 assets:
-  - assets/Images/yellowlab.jpg
+                                                                                                                                                                - assets/Images/yellowlab.jpg
 
 # The following line ensures that the Material Icons font is
 # included with your application, so that you can use the icons in

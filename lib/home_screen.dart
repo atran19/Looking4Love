@@ -1,7 +1,10 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'image_picker_handler.dart';
 import 'image_picker_dialog.dart';
+
+
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key, this.title}) : super(key: key);
@@ -46,20 +49,126 @@ class _HomeScreenState extends State<HomeScreen>
       ),
       body: new GestureDetector(
         onTap: () => imagePicker.showDialog(context),
-        child: new Center(
+        child: new Container(
+          alignment: Alignment(0.0,-0.9),
           child: _image == null
               ? new Stack(
             children: <Widget>[
 
-              new Center(
-                child: new CircleAvatar(
+          new Container(
+            alignment: FractionalOffset(0.50, 0.4),
+          child: TextField(
+            textAlign: TextAlign.center,
+          decoration: new InputDecoration.collapsed(
+          hintText: 'Input Name Here'
+          ),
+        ),
+      ),
+          new Container(
+            alignment: FractionalOffset(0.50, 0.44),
+            child: TextField(
+              textAlign: TextAlign.center,
+              decoration: new InputDecoration.collapsed(
+                  hintText: 'Input Age Here'
+              ),
+            ),
+          ),
+
+          new Container(
+            alignment: FractionalOffset(0.5, 0.48),
+            child: TextField(
+              textAlign: TextAlign.center,
+              decoration: new InputDecoration.collapsed(
+                  hintText: 'Input Interest #1 Here'
+              ),
+            ),
+          ),
+
+          new Container(
+            alignment: FractionalOffset(0.5, 0.52),
+            child: TextField(
+              textAlign: TextAlign.center,
+              decoration: new InputDecoration.collapsed(
+                  hintText: 'Input Interest #2 Here'
+              ),
+            ),
+          ),
+          new Container(
+            alignment: FractionalOffset(0.9, 0.56), child: TextField(
+            textAlign: TextAlign.center,
+              decoration: new InputDecoration.collapsed(
+                  hintText: 'Input Interest #3 Here'
+              ),
+            ),
+          ),
+
+
+
+              new Container(
+                alignment: FractionalOffset(0.5, 0.6),
+                child: Text(
+                  'Gender:',
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+  ),),
+
+              new Container(
+                alignment: FractionalOffset(0.5, 0.66),
+                child: new DropdownButton<String>(
+                  items: <String>['Male', 'Female',].map((String value) {
+                    return new DropdownMenuItem<String>(
+                      value: value,
+                      child: new Text(value),
+                    );
+                  }).toList(),
+                  onChanged: (_) {
+
+                  },
+                ),
+              ),
+
+              new Container(
+                alignment: FractionalOffset(0.5, 0.72),
+                child: Text(
+                  'Looking for:',
+                  textAlign: TextAlign.center,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),),
+
+               new Container(
+                   alignment: FractionalOffset(0.5, 0.78),
+                 child: new DropdownButton<String>(
+                 items: <String>['Males', 'Females', 'Both'].map((String value) {
+                   return new DropdownMenuItem<String>(
+                     value: value,
+                     child: new Text(value),
+                   );
+                 }).toList(),
+                 onChanged: (_) {},
+                 ),
+               ),
+
+
+
+              new Container(
+
+          alignment: Alignment(0.0,-0.9),
+
+                child:
+
+                new CircleAvatar(
+                  child: Text("Press to Insert Image"),
                   radius: 80.0,
                   backgroundColor: const Color(0xFF778899),
                 ),
               ),
-              new Center(
-                child: new Image.asset("assets/photo_camera.png"),
-              ),
+
+
+              //new Center(
+              //  child: new Image.asset("yellowlab.jpg"),
+            //  ),
 
             ],
           )
@@ -73,13 +182,18 @@ class _HomeScreenState extends State<HomeScreen>
                 fit: BoxFit.cover,
               ),
               border:
-              Border.all(color: Colors.red, width: 5.0),
+              Border.all(color: Colors.lightGreen, width: 5.0),
               borderRadius:
               new BorderRadius.all(const Radius.circular(80.0)),
+
+
+
+
             ),
           ),
         ),
       ),
+
 
     );
   }
@@ -90,4 +204,30 @@ class _HomeScreenState extends State<HomeScreen>
       this._image = _image;
     });
   }
+}
+
+Widget roundedButton(
+    String buttonLabel, EdgeInsets margin, Color bgColor, Color textColor) {
+  var loginBtn = new Container(
+    margin: margin,
+    padding: EdgeInsets.all(15.0),
+    alignment: FractionalOffset.center,
+    decoration: new BoxDecoration(
+      color: bgColor,
+      borderRadius: new BorderRadius.all(const Radius.circular(100.0)),
+      boxShadow: <BoxShadow>[
+        BoxShadow(
+          color: const Color(0xFF696969),
+          offset: Offset(1.0, 6.0),
+          blurRadius: 0.001,
+        ),
+      ],
+    ),
+    child: Text(
+      buttonLabel,
+      style: new TextStyle(
+          color: textColor, fontSize: 20.0, fontWeight: FontWeight.bold),
+    ),
+  );
+  return loginBtn;
 }
