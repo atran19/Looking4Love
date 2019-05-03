@@ -6,6 +6,9 @@ import 'dart:math' as math;
 import 'package:image_picker/image_picker.dart';
 import 'home_screen.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'firebase_notification_handler.dart';
+
+
 
 
 class MyApp extends StatelessWidget {
@@ -45,7 +48,14 @@ class Profile extends StatelessWidget {
 }
 
 
+
+
 class App extends StatelessWidget {
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -71,6 +81,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
 
 
+
+
   int _selectedIndex = 0;
   final _widgetOptions = [
     Text('Index 0: Home'),
@@ -83,6 +95,10 @@ class _HomeState extends State<Home> {
 
   List<Widget>cardList;
 
+
+
+  
+
   void _removeCard(index) {
     setState(() {
       cardList.removeAt(index);
@@ -92,6 +108,8 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    super.initState();
+    new FirebaseNotifications().setUpFirebase();
     // TODO: implement initState
     super.initState();
     location.onLocationChanged().listen((value) {
@@ -147,13 +165,14 @@ class _HomeState extends State<Home> {
                             child: new Image.network(i),
 
                           ),
-
+/*
                           new Row(children: <Widget>[
                             currentLocation == null
                                 ? CircularProgressIndicator()
                                 : Text("Location:" + currentLocation["latitude"].toString() + " " + currentLocation["longitude"].toString()),
                           ]
                           ),
+                          */
 
 
 
