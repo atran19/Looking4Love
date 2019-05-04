@@ -9,6 +9,7 @@ import 'firebase_notification_handler.dart';
 
 
 
+
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
@@ -30,7 +31,9 @@ class MyApp extends StatelessWidget {
 List<String> Names = ['https://lorempixel.com/250/170', 'https://picsum.photos/250/170', 'https://lorempixel.com/250/169', 'https://lorempixel.com/250/171', 'https://lorempixel.com/250/174'];
 
 void main() {
+
   runApp(App());
+
 
 }
 
@@ -78,7 +81,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 
-
+  bool _visible = true;
 
 
   int _selectedIndex = 0;
@@ -95,7 +98,7 @@ class _HomeState extends State<Home> {
 
 
 
-  
+
 
   void _removeCard(index) {
     setState(() {
@@ -121,6 +124,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: AppBar(
           title:
           RichText(
@@ -139,16 +143,31 @@ class _HomeState extends State<Home> {
 
       Center(
 
-        child: CarouselSlider(
+               child: CarouselSlider(
           height: 500.0,
           items: Names.map((i) {
             return Builder(
               builder: (BuildContext context) {
-                return Container(child: PageView(
+
+                return
+
+                  Container(
+
+                  padding: EdgeInsets.all(8.0),
+                  margin: new EdgeInsets.all(8.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(8.0)), color: Colors.blueGrey,
+                  ) ,
+                child: AnimatedOpacity(
+                opacity: _visible ? 1.0 : 0.0,
+                duration: Duration(seconds: 1 ),
+                  child: PageView(
                   children: <Widget>[
 
                     Container(
-                      color: Colors.grey.withOpacity(.5),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),color: Colors.grey.withOpacity(.5),
+                      ) ,
                       margin: const EdgeInsets.all(2.0),
 
 
@@ -180,6 +199,7 @@ class _HomeState extends State<Home> {
                       width: 300,
                       decoration: BoxDecoration(
                         color: Colors.white.withOpacity(.25),
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
                         border: Border.all(color: Colors.black, width: 6),),
                   ),
 
@@ -228,11 +248,12 @@ class _HomeState extends State<Home> {
 
                           new Container(
                             decoration: new BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(8.0)),
                                 border: new Border.all(color: Colors.grey, width:4)
                             ),
-                              alignment: FractionalOffset(0.0, 0.9),
+                              alignment: FractionalOffset(0.0, 0.95),
                             child: ButtonTheme(
-                              minWidth: 70.0,
+                              minWidth: 50.0,
                               height: 70.0,
 
 
@@ -249,9 +270,18 @@ class _HomeState extends State<Home> {
                                         elevation: 2.0,
                                         onPressed: () {
 
-                                          setState (() =>Names.remove(i));
+                                          setState(() {
+                                            _visible = !_visible;
+                                          });
+                                          setState(() {
+
+
+                                            Names.remove(i);
+                                          });
+
                                                                                    // Perform some action
                                         },
+
                                     ),
                                     new RaisedButton(
                                       color: Colors.yellow.withOpacity(0.75),
@@ -295,12 +325,14 @@ class _HomeState extends State<Home> {
 
 
 
-                );
+                )
+                  );
               },
             );
           }).toList(),
         ),
       ),
+
 
 
 

@@ -17,12 +17,26 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen>
     with TickerProviderStateMixin,ImagePickerListener{
 
+  TextEditingController Nameedit = TextEditingController();
+  TextEditingController Ageedit = TextEditingController();
+  String value = "";
   File _image;
   AnimationController _controller;
   ImagePickerHandler imagePicker;
 
+
   @override
   void initState() {
+    Nameedit.addListener(()
+    {
+      print(Nameedit.text);
+    });
+
+    Ageedit.addListener(()
+    {
+      print(Ageedit.text);
+    });
+
     super.initState();
     _controller = new AnimationController(
       vsync: this,
@@ -32,6 +46,7 @@ class _HomeScreenState extends State<HomeScreen>
     imagePicker.init();
   }
 
+
   @override
   void dispose() {
     _controller.dispose();
@@ -40,6 +55,7 @@ class _HomeScreenState extends State<HomeScreen>
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
+      resizeToAvoidBottomPadding: false,
       appBar: new AppBar(
         title: new Text(widget.title,
           style: new TextStyle(
@@ -58,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen>
           new Container(
             alignment: FractionalOffset(0.50, 0.4),
           child: TextField(
+            controller: Nameedit,
             textAlign: TextAlign.center,
           decoration: new InputDecoration.collapsed(
           hintText: 'Input Name Here'
@@ -67,10 +84,11 @@ class _HomeScreenState extends State<HomeScreen>
           new Container(
             alignment: FractionalOffset(0.50, 0.44),
             child: TextField(
+              controller: Ageedit,
               textAlign: TextAlign.center,
               decoration: new InputDecoration.collapsed(
                   hintText: 'Input Age Here'
-              ),
+                               ),
             ),
           ),
 
@@ -101,9 +119,7 @@ class _HomeScreenState extends State<HomeScreen>
               ),
             ),
           ),
-
-
-
+          
               new Container(
                 alignment: FractionalOffset(0.5, 0.6),
                 child: Text(
