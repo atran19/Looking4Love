@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'image_picker_handler.dart';
 import 'image_picker_dialog.dart';
-
+import 'package:firebase_storage/firebase_storage.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -159,7 +159,8 @@ class _HomeScreenState extends State<HomeScreen>
                 child:
 
                 new CircleAvatar(
-                  child: Text("Press to Insert Image"),
+                child: Text("Press to Insert Image"),
+      //            child: _image == null ? Text ('Upload Image') : enableUpload(),
                   radius: 80.0,
                   backgroundColor: const Color(0xFF778899),
                 ),
@@ -197,7 +198,25 @@ class _HomeScreenState extends State<HomeScreen>
 
     );
   }
-
+/*Testing
+  Widget enableUpload() {
+    return Container(
+      child: Column(
+        children: <Widget> [
+          Image.file (_image),
+          RaisedButton(
+            elevation: 7.0,
+            child: Text ('Upload'),
+            onPressed: (){
+              final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('myimage.jpg');
+              final StorageUploadTask task = firebaseStorageRef.putFile (_image);
+          },
+          )
+        ],
+      )
+    );
+  }
+  *//////////////////////////
   @override
   userImage(File _image) {
     setState(() {
