@@ -1,9 +1,11 @@
 import 'dart:io';
-
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'image_picker_handler.dart';
 import 'image_picker_dialog.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:http/http.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -166,8 +168,22 @@ class _HomeScreenState extends State<HomeScreen>
                  ),
                ),
 
-
-
+              /////////////////////////////////
+/*
+          new FlatButton(
+              onPressed: (){
+                CloudFunctions.instance.call(
+                    functionName:'addUser',
+                    parameters: {
+                      "name": Nameedit.text,
+                      "age": Ageedit.text
+                    }
+                );
+              },
+              child: const Text ("Update")
+          ),
+*/
+          ////////////////////////////////////
               new Container(
 
           alignment: Alignment(0.0,-0.9),
@@ -214,25 +230,10 @@ class _HomeScreenState extends State<HomeScreen>
 
     );
   }
-/*Testing
-  Widget enableUpload() {
-    return Container(
-      child: Column(
-        children: <Widget> [
-          Image.file (_image),
-          RaisedButton(
-            elevation: 7.0,
-            child: Text ('Upload'),
-            onPressed: (){
-              final StorageReference firebaseStorageRef = FirebaseStorage.instance.ref().child('myimage.jpg');
-              final StorageUploadTask task = firebaseStorageRef.putFile (_image);
-          },
-          )
-        ],
-      )
-    );
-  }
-  *//////////////////////////
+//Testing
+
+
+  //////////////////////////
   @override
   userImage(File _image) {
     setState(() {
@@ -266,3 +267,4 @@ Widget roundedButton(
   );
   return loginBtn;
 }
+

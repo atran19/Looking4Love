@@ -1,12 +1,88 @@
-import 'package:http/http.dart';
 import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
-class Users {
+void main() => runApp(new MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+
+    return new MaterialApp(
+      title: 'Update Profiles',
+      home: new UserProfile(),
+    );
+  }
+}
+
+class UserProfile extends StatefulWidget {
+  @override
+  createState() => new UserProfileState();
+}
+class Users{
+  String name;
+  var age;
+
+
+  Users.fromJson (Map json)
+  {
+    this.name =json ['name'];
+  }
+}
+class UserProfileState extends State<UserProfile> {
+
+ // var _randomQuote = '-';
+
+  @override
+  Widget build(BuildContext context) {
+    new RaisedButton(
+        onPressed: _getUserProfile,
+        child: new Text('Update'),
+
+
+
+
+    );
+  }
+
+  _getUserProfile() async{
+    String _data = '';
+    var data = await post ('https://us-central1-looking4love-7ee9f.cloudfunctions.net/addMessage?');
+    var users = new Users.fromJson(json.decode(data.body));
+
+    setState(() {
+      _data = users.name;
+    });
+  }
+
+}
+
+
+
+/*
+import 'dart:convert';
+import 'package:flutter/material.dart';
+
+
   String name;
   Users.fromJson(Map json)
   {
     this.name =json ['name'];
   }
+
+
+Future<Response> _getData(){
+  return get ('https://us-central1-looking4love-7ee9f.cloudfunctions.net/addMessage?name=jesse&age=22&interests=javascript');
+
+}
+
+String _data = "";
+void _refresh() async {
+  var data = await _getData();
+  setState(() {
+    _data = data.body;
+  });
 }
 
 Future _click() async {
@@ -18,40 +94,22 @@ Future _click() async {
   });
 }
 
-/*
-class User {
-
-  final String name;
-
-  final String imageURL;
-
-  final String description;
-
-  const User({this.name, this.imageURL, this.description});
 
 
-  Future getImageUrl() async {
-    // Null check so our app isn't doing extra work.
-    // If there's already an image, we don't need to get one.
-    if (imageURL != null) {
-      return;
-    }
 
-    // This is how http calls are done in flutter:
-    HttpClient http = HttpClient();
-    try {
-      // Use darts Uri builder
-      var uri = Uri.http('dog.ceo', '/api/breeds/image/random');
-      var request = await http.getUrl(uri);
-      var response = await request.close();
-      var responseBody = await response.transform(utf8.decoder).join();
-      // The dog.ceo API returns a JSON object with a property
-      // called 'message', which actually is the URL.
-      imageURL = json.decode(responseBody)['message'];
-    } catch (exception) {
-      print(exception);
-    }
-  }
-}
 
+
+ new FlatButton(
+            onPressed: (){
+              CloudFunctions.instance.call(
+                functionName:'addUser',
+                parameters: {
+                  "name": Nameedit.text,
+                  "age": Ageedit.text
+                }
+              );
+            },
+            child: const Text ("Update")
+          ),
 */
+
