@@ -1,11 +1,13 @@
+/*
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
-void main() => runApp(new MyApp());
 
-class MyApp extends StatelessWidget {
+
+class NewPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
@@ -28,6 +30,7 @@ class Users{
   Users.fromJson (Map json)
   {
     this.name =json ['name'];
+    this.age =json ['age'];
   }
 }
 class UserProfileState extends State<UserProfile> {
