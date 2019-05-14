@@ -1,10 +1,10 @@
 import 'dart:io';
-import 'package:cloud_functions/cloud_functions.dart';
+
 import 'package:flutter/material.dart';
 import 'image_picker_handler.dart';
 import 'image_picker_dialog.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:http/http.dart';
+
+
 
 
 

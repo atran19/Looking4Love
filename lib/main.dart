@@ -1,15 +1,17 @@
-import "package:flutter/material.dart";
-import 'package:cloud_firestore/cloud_firestore.dart';
+
+
 /*
-//////////////
-final dummySnapshot = [
-  {"name": "Filip", "age": 15},
-  {"name": "Abraham", "age": 14},
-  {"name": "Richard", "age": 11},
-  {"name": "Ike", "age": 10},
-  {"name": "Justin", "age": 1},
-];
-/////////////////
+import "package:flutter/material.dart";
+import "package:location/location.dart";
+import 'package:carousel_slider/carousel_slider.dart';
+import 'dart:io';
+import 'dart:math' as math;
+import 'package:image_picker/image_picker.dart';
+import 'home_screen.dart';
+import 'firebase_notification_handler.dart';
+
+
+
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -19,9 +21,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Image picker',
       theme: new ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.grey,
-        accentColor: Colors.grey
+          brightness: Brightness.dark,
+          primarySwatch: Colors.grey,
+          accentColor: Colors.grey
 
       ),
       home: new HomeScreen(title: 'Intersection'),
@@ -80,8 +82,6 @@ class Home extends StatefulWidget {
   }
 }
 
-
-
 class _HomeState extends State<Home> {
 
   bool _visible = true;
@@ -109,11 +109,11 @@ class _HomeState extends State<Home> {
     }
     );
   }
-/*
+
   @override
   void initState() {
     super.initState();
-    new FirebaseNotifications().setUpFirebase();
+   // new FirebaseNotifications().setUpFirebase();
     // TODO: implement initState
     super.initState();
     location.onLocationChanged().listen((value) {
@@ -123,26 +123,9 @@ class _HomeState extends State<Home> {
     });
   }
 
-*/
-/*
-  Widget _buildBody(BuildContext context) {
-    // TODO: get actual snapshot from Cloud Firestore
-    return _buildList(context, dummySnapshot);
-  }
-
-  Widget _buildList(BuildContext context, List<Map> snapshot) {
-    return ListView(
-      padding: const EdgeInsets.only(top: 20.0),
-      children: snapshot.map((data) => _buildListItem(context, data)).toList(),
-    );
-  }
-
-  */
 
   @override
- // Widget (BuildContext context, Map data) {
-  //  final record = Record.fromMap(data);
- Widget build(BuildContext context) {
+  Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
@@ -163,8 +146,7 @@ class _HomeState extends State<Home> {
 
       Center(
 
-
-               child: CarouselSlider(
+        child: CarouselSlider(
           height: 500.0,
           items: Names.map((i) {
             return Builder(
@@ -174,35 +156,35 @@ class _HomeState extends State<Home> {
 
                   Container(
 
-                  padding: EdgeInsets.all(8.0),
-                  margin: new EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0)), color: Colors.blueGrey,
-                  ) ,
-                child: AnimatedOpacity(
-                opacity: _visible ? 1.0 : 0.0,
-                duration: Duration(seconds: 1 ),
-                  child: PageView(
-                  children: <Widget>[
-
-                    Container(
+                      padding: EdgeInsets.all(8.0),
+                      margin: new EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),color: Colors.grey.withOpacity(.5),
+                        borderRadius: BorderRadius.all(Radius.circular(8.0)), color: Colors.blueGrey,
                       ) ,
-                      margin: const EdgeInsets.all(2.0),
+                      child: AnimatedOpacity(
+                        opacity: _visible ? 1.0 : 0.0,
+                        duration: Duration(seconds: 1 ),
+                        child: PageView(
+                          children: <Widget>[
+
+                            Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(Radius.circular(8.0)),color: Colors.grey.withOpacity(.5),
+                              ) ,
+                              margin: const EdgeInsets.all(2.0),
 
 
 
-                      child: Container(
-                        alignment: FractionalOffset(0.50, 0.4),
+                              child: Container(
+                                alignment: FractionalOffset(0.50, 0.4),
 
-                        child: new Stack(children: <Widget>[
+                                child: new Stack(children: <Widget>[
 
-                          new ClipRRect(
-                            borderRadius: new BorderRadius.circular(8.0),
-                            child: new Image.network(i),
+                                  new ClipRRect(
+                                    borderRadius: new BorderRadius.circular(8.0),
+                                    child: new Image.network(i),
 
-                          ),
+                                  ),
 /*
                           new Row(children: <Widget>[
                             currentLocation == null
@@ -214,145 +196,144 @@ class _HomeState extends State<Home> {
 
 
 
-                  new Container(
-                    margin: const EdgeInsets.all(2.0),
-                      height: 325,
-                      width: 300,
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(.25),
-                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                        border: Border.all(color: Colors.black, width: 6),),
-                  ),
+                                  new Container(
+                                    margin: const EdgeInsets.all(2.0),
+                                    height: 325,
+                                    width: 300,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(.25),
+                                      borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                      border: Border.all(color: Colors.black, width: 6),),
+                                  ),
 
 
-                      new Container(
+                                  new Container(
 
-                            alignment: FractionalOffset(0.50, 0.4),
-                            child: Text(
+                                    alignment: FractionalOffset(0.50, 0.4),
+                                    child: Text(
 
-                              'Name, Age ',
+                                      'Name, Age ',
 
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,
-                                  color: Colors.white),
-                            ),),
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20.0,
+                                          color: Colors.white),
+                                    ),),
 
-                          new Container(
-                            alignment: FractionalOffset(0.49, 0.46),
-                            child: Text(
-                              'Interests #1',
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),),
+                                  new Container(
+                                    alignment: FractionalOffset(0.49, 0.46),
+                                    child: Text(
+                                      'Interests #1',
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),),
 
-                          new Container(
-                            alignment: FractionalOffset(0.49, 0.5),
-                            child: Text(
-                              'Interests #2 ',
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),),
+                                  new Container(
+                                    alignment: FractionalOffset(0.49, 0.5),
+                                    child: Text(
+                                      'Interests #2 ',
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),),
 
-                          new Container(
-                            alignment: FractionalOffset(0.49, 0.54),
-                            child: Text(
-                              'Interests #3 ',
-                              textAlign: TextAlign.center,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(fontWeight: FontWeight.bold),
-                            ),),
-
-
-
-                          new Container(
-                            decoration: new BoxDecoration(
-                                borderRadius: BorderRadius.all(Radius.circular(8.0)),
-                                border: new Border.all(color: Colors.grey, width:4)
-                            ),
-                              alignment: FractionalOffset(0.0, 0.95),
-                            child: ButtonTheme(
-                              minWidth: 50.0,
-                              height: 70.0,
+                                  new Container(
+                                    alignment: FractionalOffset(0.49, 0.54),
+                                    child: Text(
+                                      'Interests #3 ',
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontWeight: FontWeight.bold),
+                                    ),),
 
 
 
-                              child: new Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-
-                                    new RaisedButton(
-                                      
-                                        color: Colors.red.withOpacity(0.75),
-                                        padding: EdgeInsets. symmetric(vertical: 8.0),
-                                        shape:new CircleBorder(),
-                                        elevation: 2.0,
-                                        onPressed: () {
-
-                                          setState(() {
-                                            _visible = !_visible;
-                                          });
-                                          setState(() {
-
-
-                                            Names.remove(i);
-                                          });
-
-                                                                                   // Perform some action
-                                        },
-
+                                  new Container(
+                                    decoration: new BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(8.0)),
+                                        border: new Border.all(color: Colors.grey, width:4)
                                     ),
-                                    new RaisedButton(
-                                      color: Colors.yellow.withOpacity(0.75),
-                                      splashColor: Colors.blueGrey,
-                                      shape:new CircleBorder(),
-                                      elevation: 2.0,
-                                      onPressed: () {
-                                        // Perform some action
-                                      },
+                                    alignment: FractionalOffset(0.0, 0.95),
+                                    child: ButtonTheme(
+                                      minWidth: 50.0,
+                                      height: 70.0,
 
+
+
+                                      child: new Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                          children: <Widget>[
+
+                                            new RaisedButton(
+
+                                              color: Colors.red.withOpacity(0.75),
+                                              padding: EdgeInsets. symmetric(vertical: 8.0),
+                                              shape:new CircleBorder(),
+                                              elevation: 2.0,
+                                              onPressed: () {
+
+                                                setState(() {
+                                                  _visible = !_visible;
+                                                });
+                                                setState(() {
+
+
+                                                  Names.remove(i);
+                                                });
+
+                                                // Perform some action
+                                              },
+
+                                            ),
+                                            new RaisedButton(
+                                              color: Colors.yellow.withOpacity(0.75),
+                                              splashColor: Colors.blueGrey,
+                                              shape:new CircleBorder(),
+                                              elevation: 2.0,
+                                              onPressed: () {
+                                                // Perform some action
+                                              },
+
+                                            ),
+
+                                            new RaisedButton(
+                                              color: Colors.green.withOpacity(0.75),
+                                              splashColor: Colors.blueGrey,
+                                              shape:new CircleBorder(),
+                                              elevation: 2.0,
+                                              onPressed: () {
+                                                // Perform some action
+                                              },
+
+                                            ),
+                                          ]
+                                      ),
                                     ),
+                                  ),
 
-                                    new RaisedButton(
-                                      color: Colors.green.withOpacity(0.75),
-                                      splashColor: Colors.blueGrey,
-                                      shape:new CircleBorder(),
-                                      elevation: 2.0,
-                                      onPressed: () {
-                                        // Perform some action
-                                      },
+                                ]
+                                ),
+                                padding: EdgeInsets.all(20.0),
 
-                                    ),
-                                  ]
+
                               ),
+
                             ),
-                          ),
 
-                        ]
+
+                          ],
+
                         ),
-                        padding: EdgeInsets.all(20.0),
-
-
-                      ),
-
-                    ),
-
-
-                  ],
-
-                ),
 
 
 
-                )
+                      )
                   );
               },
             );
           }).toList(),
         ),
-
       ),
 
 
@@ -361,7 +342,7 @@ class _HomeState extends State<Home> {
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-              icon: Icon(Icons.person), title: Text('Profile'),
+            icon: Icon(Icons.person), title: Text('Profile'),
 
           )
           ,
@@ -372,18 +353,18 @@ class _HomeState extends State<Home> {
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
-),
+      ),
 
 
-);
-}
+    );
+  }
 
-void _onItemTapped(int index) {
-  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => MyApp()),
-  );
-}
+  void _onItemTapped(int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MyApp()),
+    );
+  }
 }
 
 void _RemovePage () {
@@ -401,48 +382,36 @@ class UserOptions extends StatefulWidget {
 
 class UserOptionsState extends State<UserOptions> {
 //save the result of gallery file
- // File galleryFile;
+  File galleryFile;
 
 //save the result of camera file
- // File cameraFile;
+  File cameraFile;
 
-  File _imageFile;
-  bool _uploaded;
-  //String _downloadedUrl;
-  StorageReference _reference = FirebaseStorage.instance.ref().child('yellowlab.jpg');
-
-  Future getImage (bool isCamera) async {
-    File image;
-    if (isCamera) {
-      image = await ImagePicker.pickImage(source: ImageSource.camera);
-    }
-    else {
-      image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    }
-    setState(() {
-      _imageFile = image;
-    });
-  }
   @override
   Widget build(BuildContext context) {
 
-
-    Future uploadImage() async{
-
-      StorageUploadTask uploadTask = _reference.putFile(_imageFile);
-      StorageTaskSnapshot taskSnapshot = await uploadTask.onComplete;
-       setState ((){
-           _uploaded = true;
-           });
+    //display image selected from gallery
+    imageSelectorGallery() async {
+      galleryFile = await ImagePicker.pickImage(
+        source: ImageSource.gallery,
+        // maxHeight: 50.0,
+        // maxWidth: 50.0,
+      );
+      print("You selected gallery image : " + galleryFile.path);
+      setState(() {});
     }
 
- /*   Future downloadImage() async {
-      String downloadAddress = await _reference.getDownloadURL();
-      setState(() {
-        _downloadUrl = downloadAddress;
-      });
+    //display image selected from camera
+    imageSelectorCamera() async {
+      cameraFile = await ImagePicker.pickImage(
+        source: ImageSource.camera,
+        //maxHeight: 50.0,
+        //maxWidth: 50.0,
+      );
+      print("You selected camera image : " + cameraFile.path);
+      setState(() {});
     }
-*/
+
     return new Scaffold(
 
       appBar: AppBar(
@@ -459,51 +428,47 @@ class UserOptionsState extends State<UserOptions> {
 
         builder: (BuildContext context) {
           return new Container (
-            child: Stack(
-              alignment: FractionalOffset(0.5, 0.4) ,
+              child: Stack(
+                alignment: FractionalOffset(0.5, 0.4) ,
 
 
-            children: <Widget>[
+                children: <Widget>[
 
-   //           displaySelectedFile(galleryFile),
-   //           displaySelectedFile(cameraFile),
+                  displaySelectedFile(galleryFile),
+                  displaySelectedFile(cameraFile),
 
-              Container(
-                  alignment: FractionalOffset(0.5, 0.8),
-              child: new RaisedButton(
+                  Container(
+                    alignment: FractionalOffset(0.5, 0.8),
+                    child: new RaisedButton(
 
-                child: new Text('Select Image from Gallery'),
-                onPressed: (){
-                  getImage(false);
-                }
-              ),
-              ),
-              Container(
-          alignment: FractionalOffset(0.5, 0.9),
-              child: new RaisedButton(
-                child: new Text('Select Image from Camera'),
-                  onPressed: (){
-                    getImage(true);
-                  }
-              ),
-              ),
-          Container(
-          alignment: FractionalOffset(0.5, 1),
-          child: new RaisedButton(
-          child: new Text('Submit Photo'),
-          onPressed: () {
+                      child: new Text('Select Image from Gallery'),
+                      onPressed: imageSelectorGallery,
+                    ),
+                  ),
+                  Container(
+                    alignment: FractionalOffset(0.5, 0.9),
+                    child: new RaisedButton(
+                      child: new Text('Select Image from Camera'),
+                      onPressed: imageSelectorCamera,
+                    ),
+                  ),
+                  Container(
+                    alignment: FractionalOffset(0.5, 1),
+                    child: new RaisedButton(
+                      child: new Text('GO BACK'),
+                      onPressed: () {
 
-            uploadImage();
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => App()),
+                        );
+                        // Perform some action
+                      },
+                    ),
+                  ),
 
-          // Perform some action
-          },
 
-          ),
-
-          ),
- //             _uploaded == false ? Container () : RaisedButton
-
-          ],
+                ],
               )
 
           )
@@ -528,42 +493,12 @@ class UserOptionsState extends State<UserOptions> {
   }
 }
 
-
-//////////////////
-class Record {
-  final String name;
-  final age;
-  final DocumentReference reference;
-
-  Record.fromMap(Map<String, dynamic> map, {this.reference})
-      : assert(map['name'] != null),
-        assert(map['age'] != null),
-        name = map['name'],
-        age = map['age'];
-
-  Record.fromSnapshot(DocumentSnapshot snapshot)
-      : this.fromMap(snapshot.data, reference: snapshot.reference);
-
-  @override
-  String toString() => "Record<$name:$age>";
-}
-
 */
-
-
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
-
-final dummySnapshot = [
-  {"name": "Filip", "votes": 15},
-  {"name": "Abraham", "votes": 14},
-  {"name": "Richard", "votes": 11},
-  {"name": "Ike", "votes": 10},
-  {"name": "Justin", "votes": 1},
-];
 
 class MyApp extends StatelessWidget {
   @override
@@ -592,19 +527,29 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildBody(BuildContext context) {
-    // TODO: get actual snapshot from Cloud Firestore
-    return _buildList(context, dummySnapshot);
+    return StreamBuilder<QuerySnapshot>(
+      stream: Firestore.instance.collection('baby').snapshots(),
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) return LinearProgressIndicator();
+
+        return _buildList(context, snapshot.data.documents);
+      },
+    );
   }
 
-  Widget _buildList(BuildContext context, List<Map> snapshot) {
-    return ListView(
-      padding: const EdgeInsets.only(top: 20.0),
+  Widget _buildList(BuildContext context, List<DocumentSnapshot> snapshot) {
+    return PageView(
+
+
+
+
+      //padding: const EdgeInsets.only(top: 20.0),
       children: snapshot.map((data) => _buildListItem(context, data)).toList(),
     );
   }
 
-  Widget _buildListItem(BuildContext context, Map data) {
-    final record = Record.fromMap(data);
+  Widget _buildListItem(BuildContext context, DocumentSnapshot data) {
+    final record = Record.fromSnapshot(data);
 
     return Padding(
       key: ValueKey(record.name),
@@ -614,11 +559,23 @@ class _MyHomePageState extends State<MyHomePage> {
           border: Border.all(color: Colors.grey),
           borderRadius: BorderRadius.circular(5.0),
         ),
+
+        
         child: ListTile(
+
+
           title: Text(record.name),
-          trailing: Text(record.votes.toString()),
-          onTap: () => print(record),
+          trailing: Text(record.age.toString()),
+          onTap: () => Firestore.instance.runTransaction((transaction) async {
+            final freshSnapshot = await transaction.get(record.reference);
+            final fresh = Record.fromSnapshot(freshSnapshot);
+
+            await transaction
+                .update(record.reference, {'age': fresh.age + 1});
+          }),
         ),
+
+
       ),
     );
   }
@@ -626,18 +583,18 @@ class _MyHomePageState extends State<MyHomePage> {
 
 class Record {
   final String name;
-  final int votes;
+  final int age;
   final DocumentReference reference;
 
   Record.fromMap(Map<String, dynamic> map, {this.reference})
       : assert(map['name'] != null),
-        assert(map['votes'] != null),
+        assert(map['age'] != null),
         name = map['name'],
-        votes = map['votes'];
+        age = map['age'];
 
   Record.fromSnapshot(DocumentSnapshot snapshot)
       : this.fromMap(snapshot.data, reference: snapshot.reference);
 
   @override
-  String toString() => "Record<$name:$votes>";
+  String toString() => "Record<$name:$age>";
 }
