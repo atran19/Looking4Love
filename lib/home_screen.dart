@@ -166,7 +166,11 @@ class _HomeScreenState extends State<HomeScreen>
                      child: new Text(value),
                    );
                  }).toList(),
-                 onChanged: (_) {},
+                 onChanged: (String value) {
+                   setState(() {
+                     value=value;
+                   });
+                 },
                  ),
                ),
 

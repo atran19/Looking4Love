@@ -1,6 +1,6 @@
 
 
-/*
+
 import "package:flutter/material.dart";
 import "package:location/location.dart";
 import 'package:carousel_slider/carousel_slider.dart';
@@ -81,10 +81,20 @@ class Home extends StatefulWidget {
     return _HomeState();
   }
 }
+//////////////////////////////////
+class _HomeState extends State<Home> with TickerProviderStateMixin{
+  AnimationController controller;
 
-class _HomeState extends State<Home> {
+  String get timerString {
+    Duration duration = controller.duration * controller.value;
+    return '${duration.inMinutes}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
+  }
+/////////////////////////////////
+//class _HomeState extends State<Home> {
+
 
   bool _visible = true;
+  bool chatbox = false;
 
 
   int _selectedIndex = 0;
@@ -113,6 +123,12 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
+    ////////////////////////////
+    controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 6000),
+    );
+    //////////////////////////////////
    // new FirebaseNotifications().setUpFirebase();
     // TODO: implement initState
     super.initState();
@@ -122,6 +138,7 @@ class _HomeState extends State<Home> {
       });
     });
   }
+
 
 
   @override
@@ -144,27 +161,47 @@ class _HomeState extends State<Home> {
       body:
 
 
+
+
+
       Center(
 
+    child: AnimatedOpacity(
+    opacity: _visible ? 1.0 : 0.0,
+    duration: Duration(seconds: 1 ),
+
         child: CarouselSlider(
-          height: 500.0,
+          height: 600.0,
           items: Names.map((i) {
             return Builder(
               builder: (BuildContext context) {
 
                 return
+                Stack(
 
-                  Container(
+                      children: <Widget>[
 
+                        Container(
+                          padding: EdgeInsets.all(8.0),
+                          margin: new EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(Radius.circular(8.0)), color: Colors.blueGrey,
+                          ) ,
+                          child: AnimatedOpacity(
+                            opacity: _visible ? 1.0 : 0.0,
+                            duration: Duration(seconds: 1 ),
+
+
+
+                  child: Container(
                       padding: EdgeInsets.all(8.0),
                       margin: new EdgeInsets.all(8.0),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(8.0)), color: Colors.blueGrey,
                       ) ,
-                      child: AnimatedOpacity(
-                        opacity: _visible ? 1.0 : 0.0,
-                        duration: Duration(seconds: 1 ),
-                        child: PageView(
+
+
+                       child: PageView(
                           children: <Widget>[
 
                             Container(
@@ -287,14 +324,37 @@ class _HomeState extends State<Home> {
 
                                             ),
                                             new RaisedButton(
+
                                               color: Colors.yellow.withOpacity(0.75),
                                               splashColor: Colors.blueGrey,
                                               shape:new CircleBorder(),
                                               elevation: 2.0,
-                                              onPressed: () {
-                                                // Perform some action
-                                              },
 
+                                                child: AnimatedBuilder(
+                                                  animation: controller,
+                                                  builder: (BuildContext context, Widget child) {
+                                                    return Text(timerString,);
+                                                  },
+                                                ),
+
+                                                onPressed: () {
+
+                                                ////////////////////////////////////
+
+                                                if (controller.isAnimating)
+                                                  controller.stop();
+                                                else {
+                                                  controller.reverse(
+                                                      from: controller.value ==
+                                                          0.0
+                                                          ? 1.0
+                                                          : controller.value);
+                                                  // Perform some action
+                                                }
+
+
+                                                /////////////////////////////////////
+                                              }
                                             ),
 
                                             new RaisedButton(
@@ -303,6 +363,11 @@ class _HomeState extends State<Home> {
                                               shape:new CircleBorder(),
                                               elevation: 2.0,
                                               onPressed: () {
+
+                                                setState(() {
+                                                  chatbox = !chatbox;
+
+                                                });
                                                 // Perform some action
                                               },
 
@@ -327,13 +392,96 @@ class _HomeState extends State<Home> {
                         ),
 
 
+),
+                ),
+                  ),
 
-                      )
+                        Positioned(
+                          top: 50.0,
+                          left: 10.0,
+                          right: 10.0,
+
+                child: AnimatedOpacity(
+                opacity: chatbox ? 1.0 : 0.0,
+                duration: Duration(seconds: 1 ),
+                          child: Card(
+
+
+
+
+
+                            elevation: 8.0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
+
+
+                            child: Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    "Chat Feature",
+                                    style: TextStyle(
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                      "Here we would implement Our Chat feature. This feature is not ready"),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        ),
+                        Positioned(
+                          top: 50.0,
+                          left: 10.0,
+                          right: 10.0,
+
+                          child: AnimatedOpacity(
+                            opacity: chatbox ? 1.0 : 0.0,
+                            duration: Duration(seconds: 1 ),
+                            child: Card(
+
+
+
+
+
+                              elevation: 8.0,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8.0),
+                              ),
+
+
+                              child: Column(
+                                children: <Widget>[
+
+                                  new Row(children: <Widget>[
+                                    currentLocation == null
+                                        ? CircularProgressIndicator()
+                                        : Text("Location:" + currentLocation["latitude"].toString() + " " + currentLocation["longitude"].toString()),
+                                  ]
+                                  ),
+                                  
+                                ],
+                              ),
+                            ),
+                          ),
+                        )
+                      ]
+
+
                   );
               },
             );
           }).toList(),
         ),
+    )
       ),
 
 
@@ -345,11 +493,7 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.person), title: Text('Profile'),
 
           )
-          ,
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message), title: Text('Profile'),
 
-          )
         ],
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -493,10 +637,11 @@ class UserOptionsState extends State<UserOptions> {
   }
 }
 
-*/
+/*
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -560,7 +705,7 @@ class _MyHomePageState extends State<MyHomePage> {
           borderRadius: BorderRadius.circular(5.0),
         ),
 
-        
+
         child: ListTile(
 
 
@@ -598,3 +743,38 @@ class Record {
   @override
   String toString() => "Record<$name:$age>";
 }
+////////////////////////////////////////////////
+//Access Firestore
+Firestore db= Firestore.instance;
+//reference collection
+CollectionReference geoCollectionRef= db.collection('geolocation');
+//Reference document in collection
+DocumentReference jsaDocumentRef =db.document('geolocation/gkz');
+
+// Hierarchical Data with Subcollection-Document in a Document
+DocumentReference androidTutRef = db
+    .collection('geolocation').document('gkz');
+
+
+Future<dynamic> createNote(int latitude, int longitude) async {
+  final TransactionHandler createTransaction = (Transaction tx) async {
+    final DocumentSnapshot ds = await tx.get(db.collection('geolocation').document());
+
+    var dataMap = new Map<String, dynamic>();
+    dataMap['latitude'] = '_lat';
+    dataMap['longitude'] = '_lon';
+
+    await tx.set(ds.reference, dataMap);
+
+    return dataMap;
+  };
+
+  return Firestore.instance.runTransaction(createTransaction).then((mapData) {
+ //   return Note.fromMap(mapData);
+  }).catchError((error) {
+    print('error: $error');
+    return null;
+  });
+}
+
+*/
